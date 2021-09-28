@@ -1,0 +1,92 @@
+mat-card {
+    margin: 0px auto;
+    margin-bottom: 30px;
+    background-color: #fff;
+    color: black;
+    @media (min-width: 768px) {
+        width: 200px;
+    }
+    @media (min-width: 900px) {
+        width: 240px;
+    }
+    @media (min-width: 1024px) {
+        width: 280px;
+    }
+    @media (min-width: 1250px) {
+        width: 330px;
+    }
+
+    mat-chip {
+        font-size: 14px;
+        color: black;
+        font-family: 'Josefin Sans', sans-serif;
+    }
+
+    .mat-chip.mat-standard-chip.mat-chip-disabled {
+        opacity: 1;
+    }
+
+    .priority.low {
+        background-color: #56c944;
+    }
+
+    .priority.medium {
+        background-color: rgb(252, 165, 3);
+    }
+
+    .priority.high {
+        background-color: #DE1D3E;
+        color: white;
+    }
+
+    .tags {
+        background-color: transparent !important;
+    }
+
+    .tags.dev {
+        border: 1px solid #22a6b3;
+        color: #22a6b3 !important;
+    }
+
+    .tags.ux {
+        border: 1px solid #eb4d4b;
+        color: #eb4d4b !important;
+    }
+
+    .tags.ui {
+        border: 1px solid  #6ab04c;
+        color: #6ab04c !important;
+    }
+
+    .tags.other {
+        border: 1px solid #6F1E51;
+        color: #6F1E51 !important;
+    }
+
+    p {
+        font-family: 'Fira Sans', sans-serif;
+        font-size: 15px;
+        margin-top: 14px;
+    }
+
+    .date {
+        font-style: normal;
+        font-size: 13px;
+        span {
+            font-style: italic;
+            color: #666666;
+            font-family: 'Josefin Sans', sans-serif;
+        }
+    }
+
+    .avatars {
+        display: flex;
+        justify-content: flex-end;
+        img {
+            width: 35px;
+            height: 35px;
+            margin: 0px 3px;
+            border: .5px solid #666666;
+        }
+    }
+}

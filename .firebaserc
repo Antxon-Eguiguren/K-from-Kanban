@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "k-from-kanban": {
+      "hosting": {
+        "kanban": [
+          "k-from-kanban"
+        ]
+      }
+    }
+  }
+}

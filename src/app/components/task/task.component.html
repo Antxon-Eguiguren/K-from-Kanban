@@ -1,0 +1,49 @@
+<mat-card>
+    <mat-chip
+        *ngIf="task?.priority"
+        selected
+        disabled="true"
+        class="priority"
+        [ngClass]="
+        {
+            'low': task?.priority === 'Low',
+            'medium': task?.priority === 'Medium',
+            'high': task?.priority === 'High'
+        }"
+    >
+        {{ task?.priority }}
+    </mat-chip>
+    <mat-card-content>
+      <p *ngIf="task?.description">
+        {{ task?.description }}
+      </p>
+      <mat-chip-list *ngIf="task?.tags">
+        <mat-chip
+            *ngFor="let tag of task?.tags"
+            selected
+            disabled="true"
+            class="tags"
+            [ngClass]="
+                {
+                    'dev': tag.category === 'dev',
+                    'ux': tag.category === 'ux',
+                    'ui': tag.category === 'ui',
+                    'other': tag.category === 'other'
+                }"
+        >
+            {{ tag.name }}
+        </mat-chip>
+      </mat-chip-list>
+        <p class="date" *ngIf="task?.createdOn">
+            Created on: <span>{{ task?.createdOn?.toDate() | date:'dd/MM/yyyy' }}</span>
+        </p>
+        <p class="date" *ngIf="task?.dueDate">
+            Due date: <span>{{ task?.dueDate?.toDate() | date:'dd/MM/yyyy' }}</span>
+        </p>
+      <div class="avatars" *ngIf="task?.users">
+          <ng-container *ngFor="let user of task?.users">
+            <img mat-card-avatar [src]=user.photoUrl>
+          </ng-container>
+      </div>
+    </mat-card-content>
+</mat-card>
