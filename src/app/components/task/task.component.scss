@@ -67,15 +67,17 @@ mat-card {
         font-family: 'Fira Sans', sans-serif;
         font-size: 15px;
         margin-top: 14px;
+        font-weight: 300;
     }
 
     .date {
         font-style: normal;
         font-size: 13px;
+        margin-bottom: 0px;
         span {
+            font-family: 'Josefin Sans', sans-serif;
             font-style: italic;
             color: #666666;
-            font-family: 'Josefin Sans', sans-serif;
         }
     }
 
@@ -89,4 +91,58 @@ mat-card {
             border: .5px solid #666666;
         }
     }
+
+    .task-delayed-icon {
+        position: absolute;
+        bottom: 12px;
+        color: #DE1D3E;
+        span {
+            font-family: 'Fira Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 400;
+            margin-left: 5px;
+            vertical-align: super;
+        }
+    }
+}
+
+mat-card:hover {
+    cursor: move;
+    .edit-task-button,
+    .delete-task-button {
+        opacity: 1;
+    }
+}
+
+mat-card:active {
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14),
+    0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.edit-task-button {
+    position: absolute;
+    right: 45px;
+    top: 12px;
+    color: rgb(85, 85, 85);
+    opacity: 0;
+    transition: opacity .2s ease-in-out;
+}
+
+.edit-task-button:hover,
+.delete-task-button:hover {
+    background-color: #eeeeee;
+}
+
+.delete-task-button {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    color: rgb(85, 85, 85);
+    opacity: 0;
+    transition: opacity .2s ease-in-out;
+}
+
+.task-delayed-card {
+    border-left: 3px solid #DE1D3E;
 }

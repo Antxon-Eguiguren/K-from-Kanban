@@ -13,10 +13,21 @@ section {
     }
 }
 
-section h2 {
+.title-grid h2 {
     font-family: 'Josefin Sans', sans-serif;
     font-weight: 300;
     font-size: 24px;
+}
+
+.title-grid button {
+    margin-left: 20px;
+    font-size: 12px;
+    padding-left: 5px;
+    padding-right: 10px;
+    mat-icon {
+        font-size: 16px;
+        vertical-align: text-top;
+    }
 }
 
 .task-grid mat-grid-tile {
@@ -30,7 +41,7 @@ section h2 {
 }
 
 :host ::ng-deep .task-grid mat-grid-tile .mat-grid-tile-content > div {
-    margin-bottom: 200px;
+    margin-bottom: 175px;
 }
 
 :host ::ng-deep .task-grid mat-grid-tile .mat-grid-tile-content .empty-tile {
@@ -38,6 +49,19 @@ section h2 {
     height: 80vh;
     border: 1px dashed rgb(187, 185, 185);
     margin-bottom: 0px;
+    p {
+        font-size: 60px;
+        text-align: center;
+        margin: 20px 0px;
+    }
+    button {
+        display: block;
+        margin: 0px auto;
+        mat-icon {
+            font-size: 18px;
+            vertical-align: text-top;
+        }
+    }
 }
 
 .loading {
@@ -46,7 +70,6 @@ section h2 {
     justify-content: center;
     align-items: center;
     height: 100vh;
-
     p {
         font-family: 'Josefin Sans', sans-serif;
         font-weight: 600;

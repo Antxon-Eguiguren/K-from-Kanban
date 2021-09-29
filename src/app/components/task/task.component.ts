@@ -9,11 +9,18 @@ import { Task } from '../../interfaces/task.model';
 export class TaskComponent implements OnInit {
 
   @Input() task: Task | undefined;
+  isDelayed = false;
 
   constructor() { }
 
   ngOnInit(): void {
-    
+    this.calculateIfTaskIsDelayed();
+  }
+
+  calculateIfTaskIsDelayed(): void {
+    if (new Date > this.task?.dueDate.toDate()!) {
+      this.isDelayed = true;
+    }
   }
 
 }

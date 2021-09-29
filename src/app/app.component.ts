@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 import { Task } from './interfaces/task.model';
 import { TaskService } from './services/task.service';
 import { Subscription } from 'rxjs';
 
-import firebase from 'firebase/compat/app';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,7 +12,7 @@ import firebase from 'firebase/compat/app';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  titleCols: string[] = ["💡 New", "🥁 In Progress", "🥇 Finished"];
+  titleCols: string[] = ['New', 'In Progress', 'Finished'];
   isLoading = true;
   subscription: Subscription = new Subscription;
   tasks: Task[] = [];
@@ -23,7 +23,6 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private taskService: TaskService) {}
   
   ngOnInit(): void {
-    //firebase.firestore.FieldValue.serverTimestamp();
     this.subscription = this.taskService.getTasks().subscribe(tasks => {
       this.newTasks = [];
       this.inProgressTasks = [];
@@ -33,7 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
           this.newTasks.push(task);
         } else if (task.status === 'In Progress') {
           this.inProgressTasks.push(task);
-        } else {
+        } else if (task.status === 'Finished') {
           this.finishedTasks.push(task);
         }
       });
@@ -41,7 +40,30 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
+  onClickNewTask(): void {
+    console.log('Clicked on new task...');
+  }
+
+  dropped(event: any) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }  
+   //this.boardService.sortBoards(this.boards);
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+
 } 

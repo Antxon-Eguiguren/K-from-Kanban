@@ -1,5 +1,5 @@
 <section *ngIf="isLoading" class="loading">
-  <p>Loading data...</p>
+  <p>Initializing app...</p>
   <mat-spinner></mat-spinner>
 </section>
 <section *ngIf="!isLoading">
@@ -7,31 +7,66 @@
     <ng-container *ngFor="let title of titleCols">
       <mat-grid-tile>
         <h2>{{ title }}</h2>
+        <button
+          *ngIf="title === 'New' && newTasks.length > 0"
+          mat-raised-button
+          (click)="onClickNewTask()"
+        >
+          <mat-icon>create</mat-icon>
+          New Task
+        </button>
       </mat-grid-tile>
     </ng-container>
   </mat-grid-list>
   <mat-grid-list cols="3" rowHeight="100%" class="task-grid">
     <mat-grid-tile>
-      <div *ngIf="newTasks.length > 0">
-        <ng-container *ngFor="let task of newTasks">
+      <div
+        *ngIf="newTasks.length > 0"
+        cdkDropList
+        #new="cdkDropList"
+        cdkDropData="newTasks"
+        cdkDropConnectedTo="[inProgress, finished]"
+        (cdkDropDropped)="dropped($event)"
+      >
+        <div cdkDrag *ngFor="let task of newTasks">
           <app-task [task]="task"></app-task>
-        </ng-container>
+        </div>
       </div>
-      <div *ngIf="newTasks.length === 0" class="empty-tile"></div>
+      <div *ngIf="newTasks.length === 0" class="empty-tile">
+        <p>👇</p>
+        <button mat-raised-button (click)="onClickNewTask()">
+          <mat-icon>create</mat-icon>
+          New Task
+        </button>
+      </div>
     </mat-grid-tile>
     <mat-grid-tile>
-      <div *ngIf="inProgressTasks.length > 0">
-        <ng-container *ngFor="let task of inProgressTasks">
+      <div
+        *ngIf="inProgressTasks.length > 0"
+        cdkDropList
+        #inProgress="cdkDropList"
+        cdkDropData="inProgressTasks"
+        cdkDropConnectedTo="[new, finished]"
+        (cdkDropDropped)="dropped($event)"
+      >
+        <div cdkDrag *ngFor="let task of inProgressTasks">
           <app-task [task]="task"></app-task>
-        </ng-container>
+        </div>
       </div>
       <div *ngIf="inProgressTasks.length === 0" class="empty-tile"></div>
     </mat-grid-tile>
     <mat-grid-tile>
-      <div *ngIf="finishedTasks.length > 0">
-        <ng-container *ngFor="let task of finishedTasks">
+      <div
+        *ngIf="finishedTasks.length > 0"
+        cdkDropList
+        #finished="cdkDropList"
+        cdkDropData="finishedTasks"
+        cdkDropConnectedTo="[new, inProgress]"
+        (cdkDropDropped)="dropped($event)"
+      >
+        <div cdkDrag *ngFor="let task of finishedTasks">
           <app-task [task]="task"></app-task>
-        </ng-container>
+        </div>
       </div>
       <div *ngIf="finishedTasks.length === 0" class="empty-tile"></div>
     </mat-grid-tile>
