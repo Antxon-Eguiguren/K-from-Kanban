@@ -76,3 +76,21 @@ section {
         font-size: 24px;
     }
 }
+
+.drag-handler {
+    margin-right: 10px;
+    margin-left: -8px;
+    vertical-align: middle;
+}
+
+.drag-handler:hover {
+    cursor: move;
+}
+
+.cdk-drag-placeholder {
+    opacity: .3;
+}
+
+.cdk-drag-animating, .cdk-drop-list-dragging .cdk-drag {
+    transition: transform 0.2s ease;
+}
