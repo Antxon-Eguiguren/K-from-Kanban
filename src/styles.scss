@@ -25,6 +25,10 @@ html, body {
 *::-webkit-scrollbar-track {
     background: transparent;
 }
+
+*::-webkit-scrollbar-track-piece {
+    margin-bottom: 100px;
+}
   
 *::-webkit-scrollbar-thumb {
     background-color: #dfdfdf;

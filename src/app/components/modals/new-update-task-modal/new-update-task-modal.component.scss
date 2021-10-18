@@ -1,0 +1,29 @@
+form {
+    width: 60vw;
+    max-height: 80vh;
+    overflow: initial;
+    @media(min-width: 1200px) {
+        width: 50vw;
+    }
+    mat-form-field {
+        padding: 10px;
+    }
+    mat-label {
+        font-family: 'Josefin Sans', sans-serif;
+    }
+    .tag-buttons {
+        padding: 10px;
+        display: inline-block;
+    }
+    .description {
+        width: 90%;
+    }
+    .multiselect {
+        padding: 10px;
+        width: 90%;
+    }
+    .submit-button {
+        margin: 10px;
+        margin-bottom: 50px;
+    }
+}

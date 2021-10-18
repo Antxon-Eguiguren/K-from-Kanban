@@ -1,8 +1,4 @@
-<section *ngIf="isLoading" class="loading">
-  <p>Initializing app...</p>
-  <mat-spinner></mat-spinner>
-</section>
-<section *ngIf="!isLoading">
+<section *ngIf="!isLoading; else loading">
   <mat-grid-list cols="3" rowHeight="100px" class="title-grid">
     <ng-container *ngFor="let title of titleCols">
       <mat-grid-tile>
@@ -90,3 +86,9 @@
     </mat-grid-tile>
   </mat-grid-list>
 </section>
+<ng-template #loading>
+  <section class="loading">
+    <p>Initializing app...</p>
+    <mat-spinner></mat-spinner>
+  </section>
+</ng-template>

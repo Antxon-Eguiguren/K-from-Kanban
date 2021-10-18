@@ -1,0 +1,20 @@
+.mat-chip.mat-standard-chip {
+    background-color: rgb(36, 51, 185);
+    color: white;
+    font-family: 'Josefin Sans', sans-serif;
+}
+  
+.full-width {
+    width: 100%;
+}
+  ​
+.chip-list-wrapper {
+    min-height: 3em;
+}
+
+mat-form-field {
+    font-family: 'Josefin Sans', sans-serif;
+    input {
+        margin-bottom: 6px;
+    }
+}
