@@ -14,10 +14,10 @@
   >
     {{ task?.priority }}
   </mat-chip>
-  <button mat-icon-button class="edit-task-button">
+  <button mat-icon-button class="edit-task-button" (click)="onClickEditTask(task)">
     <mat-icon>edit</mat-icon>
   </button>
-  <button mat-icon-button class="delete-task-button">
+  <button mat-icon-button class="delete-task-button" (click)="onClickDeleteTask(task)">
     <mat-icon>delete</mat-icon>
   </button>
   <mat-card-content>
@@ -31,10 +31,10 @@
         class="tags"
         [ngClass]="
           {
-            'dev': tag.category === 'dev',
-            'ux': tag.category === 'ux',
-            'ui': tag.category === 'ui',
-            'other': tag.category === 'other'
+            'dev': tag.category === 'DEV',
+            'ux': tag.category === 'UX',
+            'ui': tag.category === 'UI',
+            'other': tag.category === 'OTHER'
           }"
       >
         {{ tag.name }}

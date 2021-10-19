@@ -1,0 +1,55 @@
+form {
+    width: 60vw;
+    max-height: 80vh;
+    overflow: initial;
+    @media(min-width: 1200px) {
+        width: 50vw;
+    }
+    mat-form-field {
+        padding: 10px;
+    }
+    mat-label {
+        font-family: 'Josefin Sans', sans-serif;
+    }
+    .tag-buttons {
+        padding: 10px;
+        display: inline-block;
+    }
+    .description {
+        width: 90%;
+    }
+    .multiselect {
+        padding: 10px;
+        width: 90%;
+    }
+    .submit-button {
+        margin: 10px;
+        margin-bottom: 50px;
+        font-size: 17px;
+        mat-icon {
+            font-size: 20px;
+        }
+        &.enabled {
+            background-color: rgba(94, 224, 77, 0.87);
+        }
+    }
+}
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label, .mat-option-text {
+    color: white;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+    background-color: white;
+}
+
+::ng-deep .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+    color: white;
+}
+
+::ng-deep .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+    color: white;
+}
+
+::ng-deep .mat-datepicker-toggle-active {
+    color: white;
+}

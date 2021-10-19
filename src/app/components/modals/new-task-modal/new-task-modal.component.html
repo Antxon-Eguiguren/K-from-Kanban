@@ -21,7 +21,7 @@
                 <mat-form-field>
                     <mat-label>Category</mat-label>
                     <mat-select name="tagCategory" formControlName="category">
-                        <mat-option *ngFor="let tagCategory of tagCategories" [value]=tagCategory.value>{{tagCategory.display}}</mat-option>
+                        <mat-option *ngFor="let tagCategory of tagCategories" [value]=tagCategory>{{tagCategory}}</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <div class="tag-buttons">
@@ -48,14 +48,20 @@
     </mat-form-field>
     <div class="multiselect">
         <app-multiselect-autocomplete
-            placeholder="Asignee"
+            placeholder="Asignee(s)"
             key="options"
             [data]="availableUsers"
             (result)="receiveUserSelection($event)"
         >
         </app-multiselect-autocomplete>
     </div>
-    <button class="submit-button" mat-raised-button type="submit" [disabled]="!newTaskForm.valid">
+    <button
+        class="submit-button"
+        [ngClass]="{'enabled': newTaskForm.valid}"
+        mat-raised-button
+        type="submit"
+        [disabled]="!newTaskForm.valid"
+    >
         <mat-icon>check</mat-icon>
         Create Task
     </button>

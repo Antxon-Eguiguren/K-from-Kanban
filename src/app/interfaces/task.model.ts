@@ -6,6 +6,7 @@ export interface Task {
     id: string;
     status: 'New' | 'In Progress' | 'Finished';
     priority: 'Low' | 'Medium' | 'High';
+    index: number;
     description: string;
     tags: Tag[];
     createdOn: Timestamp;

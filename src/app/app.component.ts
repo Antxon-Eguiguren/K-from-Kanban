@@ -7,7 +7,7 @@ import { Task } from './interfaces/task.model';
 import { User } from './interfaces/user.model';
 import { TaskService } from './services/task.service';
 import { UserService } from './services/user.service';
-import { NewUpdateTaskModalComponent } from './components/modals/new-update-task-modal/new-update-task-modal.component';
+import { NewTaskModalComponent } from './components/modals/new-task-modal/new-task-modal.component';
 
 import { Subscription } from 'rxjs';
 
@@ -46,7 +46,12 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onClickNewTask(): void {
-    this.dialog.open(NewUpdateTaskModalComponent, { data: this.users });
+    this.dialog.open(NewTaskModalComponent, {
+      data: { 
+        users: this.users,
+        tasks: this.tasks
+      }
+    });
   }
 
   dropped(event: CdkDragDrop<string[]>): void {
@@ -54,14 +59,17 @@ export class AppComponent implements OnInit, OnDestroy {
       switch (event.container.id) {
         case 'new':
           moveItemInArray(this.newTasks, event.previousIndex, event.currentIndex);
+          this.taskService.sortTasks(this.newTasks);
           break;
 
         case 'inProgress':
           moveItemInArray(this.inProgressTasks, event.previousIndex, event.currentIndex);
+          this.taskService.sortTasks(this.inProgressTasks);
           break;
 
         case 'finished':
           moveItemInArray(this.finishedTasks, event.previousIndex, event.currentIndex);
+          this.taskService.sortTasks(this.finishedTasks);
           break;
       
         default:
@@ -71,21 +79,27 @@ export class AppComponent implements OnInit, OnDestroy {
       if ((event.previousContainer.id === 'new') && (event.container.id === 'inProgress') || 
           (event.previousContainer.id === 'new') && (event.container.id === 'inProgress-empty')) {
         transferArrayItem(this.newTasks, this.inProgressTasks, event.previousIndex, event.currentIndex);
+        this.taskService.sortTasks(this.inProgressTasks, 'In Progress');
       } else if ((event.previousContainer.id === 'inProgress') && (event.container.id === 'new') ||
                  (event.previousContainer.id === 'inProgress') && (event.container.id === 'new-empty')) {
         transferArrayItem(this.inProgressTasks, this.newTasks, event.previousIndex, event.currentIndex);
+        this.taskService.sortTasks(this.newTasks, 'New');
       } else if ((event.previousContainer.id === 'inProgress') && (event.container.id === 'finished') ||
                  (event.previousContainer.id === 'inProgress') && (event.container.id === 'finished-empty')) {
         transferArrayItem(this.inProgressTasks, this.finishedTasks, event.previousIndex, event.currentIndex);
+        this.taskService.sortTasks(this.finishedTasks, 'Finished');
       } else if ((event.previousContainer.id === 'finished') && (event.container.id === 'inProgress') ||
                  (event.previousContainer.id === 'finished') && (event.container.id === 'inProgress-empty')) {
         transferArrayItem(this.finishedTasks, this.inProgressTasks, event.previousIndex, event.currentIndex);
+        this.taskService.sortTasks(this.inProgressTasks, 'In Progress');
       } else if ((event.previousContainer.id === 'new') && (event.container.id === 'finished') ||
                  (event.previousContainer.id === 'new') && (event.container.id === 'finished-empty')) {
         transferArrayItem(this.newTasks, this.finishedTasks, event.previousIndex, event.currentIndex);
+        this.taskService.sortTasks(this.finishedTasks, 'Finished');
       } else if ((event.previousContainer.id === 'finished') && (event.container.id === 'new') ||
                  (event.previousContainer.id === 'finished') && (event.container.id === 'new-empty')) {
         transferArrayItem(this.finishedTasks, this.newTasks, event.previousIndex, event.currentIndex);
+        this.taskService.sortTasks(this.newTasks, 'New');
       }
     }
   }

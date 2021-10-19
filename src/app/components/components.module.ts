@@ -17,8 +17,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { TaskComponent } from './task/task.component';
 import { MultiselectAutocompleteComponent } from './shared/multiselect-autocomplete/multiselect-autocomplete.component';
-import { DeleteTaskModalComponent } from './modals/delete-task-modal/delete-task-modal.component';
-import { NewUpdateTaskModalComponent } from './modals/new-update-task-modal/new-update-task-modal.component';
+import { NewTaskModalComponent } from './modals/new-task-modal/new-task-modal.component';
+import { EditTaskModalComponent } from './modals/edit-task-modal/edit-task-modal.component';
 
 @NgModule({
     imports: [
@@ -39,6 +39,6 @@ import { NewUpdateTaskModalComponent } from './modals/new-update-task-modal/new-
       CommonModule
     ],
     exports: [TaskComponent, MatIconModule, MatButtonModule],
-    declarations: [TaskComponent, DeleteTaskModalComponent, NewUpdateTaskModalComponent, MultiselectAutocompleteComponent]
+    declarations: [TaskComponent, NewTaskModalComponent, EditTaskModalComponent, MultiselectAutocompleteComponent ]
 })
 export class ComponentsModule { }

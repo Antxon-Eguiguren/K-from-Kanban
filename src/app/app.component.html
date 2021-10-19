@@ -22,7 +22,7 @@
         (cdkDropListDropped)="dropped($event)"
         id="new"
       >
-        <div cdkDrag *ngFor="let task of newTasks">
+        <div cdkDrag [cdkDragData]="task" *ngFor="let task of newTasks">
           <app-task [task]="task">
             <mat-icon cdkDragHandle class="drag-handler">drag_indicator</mat-icon>
           </app-task>
@@ -49,7 +49,7 @@
           (cdkDropListDropped)="dropped($event)"
           id="inProgress"
         >
-          <div cdkDrag *ngFor="let task of inProgressTasks">
+          <div cdkDrag [cdkDragData]="task" *ngFor="let task of inProgressTasks">
             <app-task [task]="task">
               <mat-icon cdkDragHandle class="drag-handler">drag_indicator</mat-icon>
             </app-task>
@@ -70,7 +70,7 @@
         (cdkDropListDropped)="dropped($event)"
         id="finished"
       >
-        <div cdkDrag *ngFor="let task of finishedTasks">
+        <div cdkDrag [cdkDragData]="task" *ngFor="let task of finishedTasks">
           <app-task [task]="task">
             <mat-icon cdkDragHandle class="drag-handler">drag_indicator</mat-icon>
           </app-task>
