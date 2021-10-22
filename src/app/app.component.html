@@ -23,7 +23,7 @@
         id="new"
       >
         <div cdkDrag [cdkDragData]="task" *ngFor="let task of newTasks">
-          <app-task [task]="task">
+          <app-task [task]="task" [users]="users">
             <mat-icon cdkDragHandle class="drag-handler">drag_indicator</mat-icon>
           </app-task>
         </div>
@@ -50,7 +50,7 @@
           id="inProgress"
         >
           <div cdkDrag [cdkDragData]="task" *ngFor="let task of inProgressTasks">
-            <app-task [task]="task">
+            <app-task [task]="task" [users]="users">
               <mat-icon cdkDragHandle class="drag-handler">drag_indicator</mat-icon>
             </app-task>
           </div>
@@ -71,7 +71,7 @@
         id="finished"
       >
         <div cdkDrag [cdkDragData]="task" *ngFor="let task of finishedTasks">
-          <app-task [task]="task">
+          <app-task [task]="task" [users]="users">
             <mat-icon cdkDragHandle class="drag-handler">drag_indicator</mat-icon>
           </app-task>
         </div>

@@ -7,27 +7,27 @@
         [formControl]="selectControl"
     >
         <div class="chip-list-wrapper">
-            <mat-chip-list #chipList>
-            <ng-container *ngFor="let user of selectedData">
-                <mat-chip class="cardinal-colors" (click)="removeChip(user)">
-                {{ user.item.name + ' ' + user.item.surname }}
-                <mat-icon class="mat-chip-remove">cancel</mat-icon>
-                </mat-chip>
-            </ng-container>
+            <mat-chip-list>
+                <ng-container *ngFor="let user of selectedData">
+                    <mat-chip (click)="removeChip(user)">
+                        {{ user.item.name + ' ' + user.item.surname }}
+                        <mat-icon class="mat-chip-remove">cancel</mat-icon>
+                    </mat-chip>
+                </ng-container>
             </mat-chip-list>
         </div>
-</mat-form-field>
 
-<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-    <mat-option *ngFor="let user of filteredData | async">
-        <div (click)="optionClicked($event, user)">
-            <mat-checkbox
-                [checked]="user.selected" 
-                (change)="toggleSelection(user)" 
-                (click)="$event.stopPropagation()"
-            >
-                {{ user.item.name + ' ' + user.item.surname }}
-            </mat-checkbox>
-        </div>
-    </mat-option>
-</mat-autocomplete>
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let user of filteredData | async">
+            <div (click)="optionClicked($event, user)">
+                <mat-checkbox
+                    [checked]="user.selected" 
+                    (change)="toggleSelection(user)" 
+                    (click)="$event.stopPropagation()"
+                >
+                    {{ user.item.name + ' ' + user.item.surname }}
+                </mat-checkbox>
+            </div>
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>

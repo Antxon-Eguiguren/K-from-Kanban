@@ -2,9 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 
-import { Task } from '../../interfaces/task.model';
 import { TaskService } from '../../services/task.service';
 import { EditTaskModalComponent } from '../modals/edit-task-modal/edit-task-modal.component';
+
+import { Task } from '../../interfaces/task.model';
+import { User } from '../../interfaces/user.model';
 
 @Component({
   selector: 'app-task',
@@ -14,6 +16,7 @@ import { EditTaskModalComponent } from '../modals/edit-task-modal/edit-task-moda
 export class TaskComponent implements OnInit {
 
   @Input() task!: Task;
+  @Input() users: User[] = [];
   isDelayed = false;
 
   constructor(
@@ -32,7 +35,12 @@ export class TaskComponent implements OnInit {
   }
 
   onClickEditTask(task: Task) {
-    this.dialog.open(EditTaskModalComponent, { data: task });
+    this.dialog.open(EditTaskModalComponent, {
+      data: { 
+        users: this.users,
+        task
+      }
+    });
   }
 
   onClickDeleteTask(task: Task) {

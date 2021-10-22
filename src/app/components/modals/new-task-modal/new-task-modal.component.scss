@@ -2,6 +2,7 @@ form {
     width: 60vw;
     max-height: 80vh;
     overflow: initial;
+    position: relative;
     @media(min-width: 1200px) {
         width: 50vw;
     }
@@ -23,17 +24,27 @@ form {
         width: 90%;
     }
     .submit-button {
+        font-family: 'Fira Sans', sans-serif;
+        font-size: 14px;
         margin: 10px;
         margin-bottom: 50px;
-        font-size: 17px;
         mat-icon {
-            font-size: 20px;
+            font-size: 16px;
+            vertical-align: sub;
         }
         &.enabled {
             background-color: rgba(94, 224, 77, 0.87);
         }
     }
+    .close-button {
+        position: absolute;
+        right: 0px;
+    }
+    .close-button:hover {
+        cursor: pointer;
+    }
 }
+
 ::ng-deep .mat-form-field.mat-focused .mat-form-field-label, .mat-option-text {
     color: white;
 }
@@ -52,4 +63,11 @@ form {
 
 ::ng-deep .mat-datepicker-toggle-active {
     color: white;
+}
+
+::ng-deep .mat-select-value-text,
+::ng-deep .mat-option-text,
+::ng-deep .mat-form-field-infix {
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 14px;
 }

@@ -39,4 +39,8 @@ export class TaskService {
   deleteTask(taskId: string): void {
     this.db.collection<Task>('tasks').doc(taskId).delete();
   }
+
+  updateTask(task: Task): void {
+    this.db.collection<Task>('tasks').doc(task.id).update({ ...task });
+  }
 }

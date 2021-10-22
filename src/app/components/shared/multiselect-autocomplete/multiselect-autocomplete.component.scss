@@ -13,8 +13,16 @@
 }
 
 mat-form-field {
-    font-family: 'Josefin Sans', sans-serif;
     input {
         margin-bottom: 6px;
     }
+}
+
+::ng-deep .mat-checkbox-label {
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 14px;
+}
+
+::ng-deep .mat-form-field-label {
+    font-family: 'Josefin Sans', sans-serif;
 }

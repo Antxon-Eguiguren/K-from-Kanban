@@ -3,8 +3,9 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { User } from '../../../interfaces/user.model';
+import { Tag } from '../../../interfaces/tag.model';
 import { Task } from 'src/app/interfaces/task.model';
+import { User } from '../../../interfaces/user.model';
 import { TaskService } from '../../../services/task.service';
 
 @Component({
@@ -16,8 +17,9 @@ export class NewTaskModalComponent {
 
   tasks: Task[] = [];
   availableUsers: User[] = [];
-  taskPriorities = ['Low', 'Medium', 'High'];
-  tagCategories = ['UX', 'UI', 'DEV', 'OTHER'];
+  taskPriorities: Task['priority'][] = ['Low', 'Medium', 'High'];
+  tagCategories: Tag['category'][] = ['UX', 'UI', 'DEV', 'OTHER'];
+
   newTaskForm = this.formBuilder.group({
     createdOn: [],
     status: [],
@@ -64,10 +66,12 @@ export class NewTaskModalComponent {
   }
 
   onSubmitCreateTask(): void {
-    this.newTaskForm.controls['createdOn'].setValue(new Date());
-    this.newTaskForm.controls['status'].setValue('New');
     const index = this.getNewTaskIndex();
-    this.newTaskForm.controls['index'].setValue(index + 1);
+    this.newTaskForm.patchValue({
+      createdOn: new Date(),
+      status: 'New',
+      index: index + 1
+    });
     this.taskService.createTask(this.newTaskForm.value);
     this.dialogRef.close();
   }
@@ -79,6 +83,10 @@ export class NewTaskModalComponent {
 
   onClickRemoveTag(index: number): void {
     this.tags.removeAt(index);
+  }
+
+  onClickCloseModal(): void {
+    this.dialogRef.close();
   }
 
 }

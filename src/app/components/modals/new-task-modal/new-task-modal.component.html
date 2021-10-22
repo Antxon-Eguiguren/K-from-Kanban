@@ -1,4 +1,5 @@
 <form [formGroup]="newTaskForm" (ngSubmit)="onSubmitCreateTask()" autocomplete="off">
+    <mat-icon class="close-button" (click)="onClickCloseModal()">close</mat-icon>
     <mat-form-field>
         <mat-label>Priority</mat-label>
         <mat-select name="priority" formControlName="priority">
@@ -50,7 +51,7 @@
         <app-multiselect-autocomplete
             placeholder="Asignee(s)"
             key="options"
-            [data]="availableUsers"
+            [availableUsers]="availableUsers"
             (result)="receiveUserSelection($event)"
         >
         </app-multiselect-autocomplete>

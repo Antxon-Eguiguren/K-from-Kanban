@@ -16,8 +16,9 @@ export class MultiselectAutocompleteComponent implements OnInit {
 
   @Output() result = new EventEmitter<{ key: string, data: User[] }>();
   @Input() placeholder: string = 'Select Data';
-  @Input() data: User[] = [];
+  @Input() availableUsers: User[] = [];
   @Input() key: string = '';
+  @Input() assignedUsers!: User[];
   selectControl = new FormControl();
   rawData: ItemData[] = [];
   selectedData: ItemData[] = [];
@@ -33,9 +34,18 @@ export class MultiselectAutocompleteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.data.forEach((item: User) => {
-      this.rawData.push({ item, selected: false });
+    this.availableUsers.forEach(user => {
+      if (this.assignedUsers?.find(item => user.id === item.id) !== undefined) {
+        this.rawData.push({ item: user, selected: true });
+      } else {
+        this.rawData.push({ item: user, selected: false });
+      }
     });
+
+    // In case of editing the task, add the assigned users to the chip list
+    if (this.assignedUsers?.length > 0) {
+      this.assignedUsers.forEach(user => this.selectedData.push({item: user, selected: true}));
+    }
   }
 
   filter(inputText: string): Array<ItemData> {
@@ -54,6 +64,10 @@ export class MultiselectAutocompleteComponent implements OnInit {
 
   displayFn(): string {
     return '';
+  }
+
+  removeChip(user: ItemData): void {
+    this.toggleSelection(user);
   }
 
   optionClicked = (event: Event, data: ItemData): void => {
@@ -81,7 +95,4 @@ export class MultiselectAutocompleteComponent implements OnInit {
     this.result.emit({key: this.key, data: results });
   }
 
-  removeChip(user: ItemData): void {
-    this.toggleSelection(user);
-  }
 }

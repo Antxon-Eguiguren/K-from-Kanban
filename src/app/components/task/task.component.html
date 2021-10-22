@@ -41,10 +41,10 @@
       </mat-chip>
     </mat-chip-list>
     <p class="date" *ngIf="task?.createdOn">
-      Created on: <span>{{ task?.createdOn?.toDate() | date:'dd/MM/yyyy' }}</span>
+      Created on: <span>{{ task?.createdOn?.toDate() | date:'MM/dd/yyyy' }}</span>
     </p>
     <p class="date" *ngIf="task?.dueDate">
-      Due date: <span>{{ task?.dueDate?.toDate() | date:'dd/MM/yyyy' }}</span>
+      Due date: <span>{{ task?.dueDate?.toDate() | date:'MM/dd/yyyy' }}</span>
     </p>
     <div class="avatars" *ngIf="task?.users">
       <ng-container *ngFor="let user of task?.users">

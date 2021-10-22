@@ -22,11 +22,11 @@ export class AppComponent implements OnInit, OnDestroy {
   isLoading = true;
   tasksSubscription: Subscription = new Subscription;
   usersSubscription: Subscription = new Subscription;
-  users!: User[];
-  tasks!: Task[];
-  newTasks!: Task[];
-  inProgressTasks!: Task[];
-  finishedTasks!: Task[];
+  users: User[] = [];
+  tasks: Task[] = [];
+  newTasks: Task[] = [];
+  inProgressTasks: Task[] = [];
+  finishedTasks: Task[] = [];
 
   constructor(
     private taskService: TaskService,
