@@ -70,8 +70,8 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.usersSubscription = this.userService.users$.subscribe(users => this.availableUsers = users);
-    this.tagsSubscription = this.tagService.tags$.subscribe(tags => this.serverTags = tags);
+    this.usersSubscription = this.userService.getUsers().subscribe(users => this.availableUsers = users);
+    this.tagsSubscription = this.tagService.getTags().subscribe(tags => this.serverTags = tags);
   }
 
   initTagsForm(): FormGroup {

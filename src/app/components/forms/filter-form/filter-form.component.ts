@@ -5,7 +5,7 @@ import { User } from '../../../interfaces/user.model';
 import { Tag } from '../../../interfaces/tag.model';
 
 import { UserService } from '../../../services/user.service';
-import { TagService } from 'src/app/services/tag.service';
+import { TagService } from '../../../services/tag.service';
 
 import { Subscription } from 'rxjs';
 
@@ -24,8 +24,8 @@ export class FilterFormComponent implements OnInit, OnDestroy {
   @Output() filters = new EventEmitter<any>();
   users: User[] = [];
   tags: Tag[] = [];
-  usersSubscription: Subscription = new Subscription;
-  tagsSubscription: Subscription = new Subscription;
+  usersSubscription: Subscription = new Subscription();
+  tagsSubscription: Subscription = new Subscription();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,8 +34,8 @@ export class FilterFormComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.usersSubscription = this.userService.users$.subscribe(users => this.users = users);
-    this.tagsSubscription = this.tagsService.tags$.subscribe(tags => this.tags = tags);
+    this.usersSubscription = this.userService.getUsers().subscribe(users => this.users = users);
+    this.tagsSubscription = this.tagsService.getTags().subscribe(tags => this.tags = tags);
   }
 
   receiveUserSelection(event: any): void {

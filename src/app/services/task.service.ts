@@ -7,7 +7,7 @@ import { TagService } from './tag.service';
 import { Task } from '../interfaces/task.model';
 import { Tag } from '../interfaces/tag.model';
 
-import { BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import firebase from 'firebase/compat/app';
 
@@ -16,17 +16,13 @@ import firebase from 'firebase/compat/app';
 })
 export class TaskService {
 
-  tasks$: BehaviorSubject<Task[]> = new BehaviorSubject([] as Task[]);
-
   constructor(
     private db: AngularFirestore,
     private tagsService: TagService
   ) {}
 
-  getTasks(): void {
-    this.db.collection<Task>('tasks', ref => ref.orderBy('index', 'asc'))
-    .valueChanges({ idField: 'id' })
-    .subscribe(tasks => this.tasks$.next(tasks));
+  getTasks(): Observable<Task[]> {
+    return this.db.collection<Task>('tasks', ref => ref.orderBy('index', 'asc')).valueChanges({ idField: 'id' });
   }
 
   async createTask(task: Task, serverTags: Tag[]): Promise<void> {

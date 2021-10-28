@@ -1,6 +1,6 @@
 <mat-sidenav-container
   class="container"
-  *ngIf="!isLoading; else loading"
+  *ngIf="!(loadingService.loading$ | async); else loading"
 >
   <mat-sidenav #sidenav mode="over" class="sidenav-filter">
     <app-filter-form (filters)="receiveFilters($event)"></app-filter-form>

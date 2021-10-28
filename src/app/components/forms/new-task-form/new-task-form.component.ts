@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { MatDialogRef } from '@angular/material/dialog';
@@ -26,8 +26,8 @@ export class NewTaskFormComponent implements OnInit, OnDestroy {
   taskPriorities: Task['priority'][] = ['Low', 'Medium', 'High'];
   tagCategories: Tag['category'][] = ['UX', 'UI', 'DEV', 'OTHER'];
   tasksSubscription: Subscription = new Subscription();
+  usersSubsription: Subscription = new Subscription();
   tagsSubscription: Subscription = new Subscription();
-  usersSubscription: Subscription = new Subscription();
 
   newTaskForm = this.formBuilder.group({
     createdOn: [],
@@ -53,9 +53,9 @@ export class NewTaskFormComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.tasksSubscription = this.taskService.tasks$.subscribe(tasks => this.tasks = tasks);
-    this.tagsSubscription = this.tagService.tags$.subscribe(tags => this.serverTags = tags);
-    this.usersSubscription = this.userService.users$.subscribe(users => this.users = users);
+    this.tasksSubscription = this.taskService.getTasks().subscribe(tasks => this.tasks = tasks);
+    this.usersSubsription = this.userService.getUsers().subscribe(users => this.users = users);
+    this.tagsSubscription = this.tagService.getTags().subscribe(tags => this.serverTags = tags);
   }
 
   initTagsForm(): FormGroup {
@@ -104,8 +104,8 @@ export class NewTaskFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.tasksSubscription.unsubscribe();
+    this.usersSubsription.unsubscribe();
     this.tagsSubscription.unsubscribe();
-    this.usersSubscription.unsubscribe();
   }
 
 }

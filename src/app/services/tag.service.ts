@@ -4,23 +4,19 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 import { Tag } from '../interfaces/tag.model';
 
-import { BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TagService {
 
-  tags$: BehaviorSubject<Tag[]> = new BehaviorSubject([] as Tag[]);
-
   constructor(
     private db: AngularFirestore
   ) {}
 
-  getTags(): void {
-    this.db.collection<Tag>('tags')
-    .valueChanges({ idField: 'id' })
-    .subscribe(tags => this.tags$.next(tags));
+  getTags(): Observable<Tag[]> {
+    return this.db.collection<Tag>('tags').valueChanges({ idField: 'id' });
   }
 
   createTags(tags: Tag[], serverTags: Tag[]): Promise<Tag[]> {
