@@ -1,8 +1,9 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, Output, Input, EventEmitter, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { ItemData } from '../../../interfaces/multi-select-item-data';
 import { User } from '../../../interfaces/user.model';
+import { Tag } from '../../../interfaces/tag.model';
 
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -12,53 +13,65 @@ import { map, startWith } from 'rxjs/operators';
   templateUrl: './multiselect-autocomplete.component.html',
   styleUrls: ['./multiselect-autocomplete.component.scss'],
 })
-export class MultiselectAutocompleteComponent implements OnInit {
+export class MultiselectAutocompleteComponent implements OnChanges  {
 
-  @Output() result = new EventEmitter<{ key: string, data: User[] }>();
+  @Output() result = new EventEmitter<{ data: User[] | Tag[] }>();
   @Input() placeholder: string = 'Select Data';
-  @Input() availableUsers: User[] = [];
-  @Input() key: string = '';
   @Input() assignedUsers!: User[];
+  @Input() data: User[] | Tag[] = [];
+  @Input() type: string = 'users' || 'tags';
   selectControl = new FormControl();
   rawData: ItemData[] = [];
   selectedData: ItemData[] = [];
   filteredData!: Observable<ItemData[]>;
   filterString: string = '';
 
-  constructor() {
-    this.filteredData = this.selectControl.valueChanges.pipe(
-      startWith<string>(''),
-      map((value) => (typeof value === 'string' ? value : this.filterString)),
-      map((inputText) => this.filter(inputText))
-    );
-  }
+  constructor() {}
 
-  ngOnInit(): void {
-    this.availableUsers.forEach(user => {
-      if (this.assignedUsers?.find(item => user.id === item.id) !== undefined) {
-        this.rawData.push({ item: user, selected: true });
-      } else {
-        this.rawData.push({ item: user, selected: false });
-      }
-    });
+  ngOnChanges(): void {
+    this.rawData = [];
+    if (this.type === 'users') {
+      this.data.forEach(item => {
+        if (this.assignedUsers?.find(user => item.id === user.id) !== undefined) {
+          this.rawData.push({ item, selected: true });
+        } else {
+          this.rawData.push({ item, selected: false });
+        }
+      });
+    } else {
+      this.data.forEach(item => this.rawData.push({ item, selected: false }));
+    }
 
     // In case of editing the task, add the assigned users to the chip list
     if (this.assignedUsers?.length > 0) {
-      this.assignedUsers.forEach(user => this.selectedData.push({item: user, selected: true}));
+      this.assignedUsers.forEach(item => this.selectedData.push({ item, selected: true }));
     }
+    
+    this.filteredData = this.selectControl.valueChanges.pipe(
+      startWith<string>(''),
+      map(value => (typeof value === 'string' ? value : this.filterString)),
+      map(inputText => this.filter(inputText))
+    );
   }
 
   filter(inputText: string): Array<ItemData> {
     this.filterString = inputText;
-    if (inputText.length > 0) {
-      return this.rawData.filter((option) => {
-        return (
-          option.item.name.toLowerCase().includes(inputText.toLowerCase()) ||
-          option.item.surname.toLowerCase().includes(inputText.toLowerCase())
-        );
-      });
+    if (this.type === 'users') {
+      if (inputText.length > 0) {
+        return this.rawData.filter(option => 
+            option.item.name.toLowerCase().includes(inputText.toLowerCase()) ||
+            option.item.surname.toLowerCase().includes(inputText.toLowerCase()));
+      } else {
+        return this.rawData;
+      }
     } else {
-      return this.rawData;
+      if (inputText.length > 0) {
+        return this.rawData.filter(option => 
+            option.item.name.toLowerCase().includes(inputText.toLowerCase()) ||
+            option.item.category.toLowerCase().includes(inputText.toLowerCase()));
+      } else {
+        return this.rawData;
+      }
     }
   }
 
@@ -66,21 +79,21 @@ export class MultiselectAutocompleteComponent implements OnInit {
     return '';
   }
 
-  removeChip(user: ItemData): void {
-    this.toggleSelection(user);
+  removeChip(item: ItemData): void {
+    this.toggleSelection(item);
   }
 
-  optionClicked = (event: Event, data: ItemData): void => {
+  optionClicked(event: Event, data: ItemData): void {
     event.stopPropagation();
     this.toggleSelection(data);
   };
 
-  toggleSelection(user: ItemData): void {
-    user.selected = !user.selected;
-    if (user.selected === true) {
-      this.selectedData.push(user);
+  toggleSelection(item: ItemData): void {
+    item.selected = !item.selected;
+    if (item.selected === true) {
+      this.selectedData.push(item);
     } else {
-      const i = this.selectedData.findIndex((element) => element.item.id === user.item.id);
+      const i = this.selectedData.findIndex(element => element.item.id === item.item.id);
       this.selectedData.splice(i, 1);
     }
     this.selectControl.setValue(this.selectedData);
@@ -88,11 +101,11 @@ export class MultiselectAutocompleteComponent implements OnInit {
   }
 
   emitData(): void {
-    const results: User[] = [];
+    const results: User[] | Tag[] = [];
     this.selectedData.forEach((data: ItemData) => {
       results.push(data.item);
     });
-    this.result.emit({key: this.key, data: results });
+    this.result.emit({ data: results });
   }
 
 }

@@ -4,10 +4,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 import { Task } from './interfaces/task.model';
-import { User } from './interfaces/user.model';
+
 import { TaskService } from './services/task.service';
 import { UserService } from './services/user.service';
-import { NewTaskModalComponent } from './components/modals/new-task-modal/new-task-modal.component';
+import { TagService } from './services/tag.service';
+
+import { NewTaskFormComponent } from './components/forms/new-task-form/new-task-form.component';
 
 import { Subscription } from 'rxjs';
 
@@ -18,40 +20,45 @@ import { Subscription } from 'rxjs';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
+  isLoading: boolean = true;
   titleCols: string[] = ['New', 'In Progress', 'Finished'];
-  isLoading = true;
-  tasksSubscription: Subscription = new Subscription;
-  usersSubscription: Subscription = new Subscription;
-  users: User[] = [];
   tasks: Task[] = [];
   newTasks: Task[] = [];
   inProgressTasks: Task[] = [];
   finishedTasks: Task[] = [];
+  tasksSubscription: Subscription = new Subscription;
 
   constructor(
     private taskService: TaskService,
     private userService: UserService,
+    private tagsService: TagService,
     private dialog: MatDialog
   ) {}
   
   ngOnInit(): void {
-    this.tasksSubscription = this.taskService.getTasks().subscribe(tasks => {
+    // Init BehaviourSubjects for each object when starting the app
+    this.taskService.getTasks();
+    this.userService.getUsers();
+    this.tagsService.getTags();
+
+    // Get Tasks from server
+    this.tasksSubscription = this.taskService.tasks$.subscribe(tasks => {
       this.tasks = tasks;
       this.newTasks = tasks.filter(task => task.status === 'New');
       this.inProgressTasks = tasks.filter(task => task.status === 'In Progress');
       this.finishedTasks = tasks.filter(task => task.status === 'Finished');
-      this.isLoading = false;
     });
-    this.usersSubscription = this.userService.getUsers().subscribe(users => this.users = users);
+
+    // TODO: arreglar por qué no hace el loading
+    this.isLoading = false;
+  }
+
+  receiveFilters(event: any): void {
+    console.log(event);
   }
 
   onClickNewTask(): void {
-    this.dialog.open(NewTaskModalComponent, {
-      data: { 
-        users: this.users,
-        tasks: this.tasks
-      }
-    });
+    this.dialog.open(NewTaskFormComponent);
   }
 
   dropped(event: CdkDragDrop<string[]>): void {
@@ -106,7 +113,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.tasksSubscription.unsubscribe();
-    this.usersSubscription.unsubscribe();
   }
 
 } 

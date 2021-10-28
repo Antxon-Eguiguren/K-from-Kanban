@@ -1,4 +1,34 @@
-section {
+.container {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background-color: #F9F9F9;
+    color: black;
+}
+
+.filter-button {
+    position: absolute;
+    left: 2vw;
+    top: 0px;
+    margin-top: 28px;
+    color: rgb(85, 85, 85);
+    z-index: 1;
+    @media (min-width: 1440px) {
+        left: 5vw;
+    }
+}
+
+.filter-button:hover {
+    background-color: #eeeeee;
+}
+
+.sidenav-filter {
+    width: 30%;
+}
+
+.kanban {
     position: absolute;
     width: 100%;
     height: 100%;

@@ -1,24 +1,33 @@
-import { Component, Inject } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 
 import { Tag } from '../../../interfaces/tag.model';
-import { Task } from 'src/app/interfaces/task.model';
 import { User } from '../../../interfaces/user.model';
+import { Task } from '../../../interfaces/task.model';
+
 import { TaskService } from '../../../services/task.service';
+import { UserService } from '../../../services/user.service';
+import { TagService } from '../../../services/tag.service';
+
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-new-task-modal',
-  templateUrl: './new-task-modal.component.html',
-  styleUrls: ['./new-task-modal.component.scss']
+  selector: 'app-new-task-form',
+  templateUrl: './new-task-form.component.html',
+  styleUrls: ['./new-task-form.component.scss']
 })
-export class NewTaskModalComponent {
+export class NewTaskFormComponent implements OnInit, OnDestroy {
 
   tasks: Task[] = [];
-  availableUsers: User[] = [];
+  users: User[] = [];
+  serverTags: Tag[] = [];
   taskPriorities: Task['priority'][] = ['Low', 'Medium', 'High'];
   tagCategories: Tag['category'][] = ['UX', 'UI', 'DEV', 'OTHER'];
+  tasksSubscription: Subscription = new Subscription();
+  tagsSubscription: Subscription = new Subscription();
+  usersSubscription: Subscription = new Subscription();
 
   newTaskForm = this.formBuilder.group({
     createdOn: [],
@@ -38,11 +47,15 @@ export class NewTaskModalComponent {
   constructor(
     private formBuilder: FormBuilder,
     private taskService: TaskService,
-    private dialogRef: MatDialogRef<NewTaskModalComponent>,
-    @Inject(MAT_DIALOG_DATA) data: any
-  ) {
-    this.availableUsers = data?.users;
-    this.tasks = data?.tasks;
+    private userService: UserService,
+    private tagService: TagService,
+    private dialogRef: MatDialogRef<NewTaskFormComponent>
+  ) {}
+
+  ngOnInit(): void {
+    this.tasksSubscription = this.taskService.tasks$.subscribe(tasks => this.tasks = tasks);
+    this.tagsSubscription = this.tagService.tags$.subscribe(tags => this.serverTags = tags);
+    this.usersSubscription = this.userService.users$.subscribe(users => this.users = users);
   }
 
   initTagsForm(): FormGroup {
@@ -72,7 +85,7 @@ export class NewTaskModalComponent {
       status: 'New',
       index: index + 1
     });
-    this.taskService.createTask(this.newTaskForm.value);
+    this.taskService.createTask(this.newTaskForm.value, this.serverTags);
     this.dialogRef.close();
   }
 
@@ -87,6 +100,12 @@ export class NewTaskModalComponent {
 
   onClickCloseModal(): void {
     this.dialogRef.close();
+  }
+
+  ngOnDestroy(): void {
+    this.tasksSubscription.unsubscribe();
+    this.tagsSubscription.unsubscribe();
+    this.usersSubscription.unsubscribe();
   }
 
 }

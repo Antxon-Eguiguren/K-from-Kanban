@@ -1,0 +1,18 @@
+<form [formGroup]="filterForm" (ngSubmit)="onSubmitFilterForm()" autocomplete="off">
+    <app-multiselect-autocomplete
+        placeholder="Search user(s)"
+        [data]="users"
+        type="users"
+        (result)="receiveUserSelection($event)"
+    >
+    </app-multiselect-autocomplete>
+    <app-multiselect-autocomplete
+        placeholder="Search tag(s)"
+        [data]="tags"
+        type="tags"
+        (result)="receiveTagsSelection($event)"
+    >
+    </app-multiselect-autocomplete>
+    <button mat-raised-button type="submit">Filter</button>
+    <button mat-raised-button>Clear filter</button>
+</form>

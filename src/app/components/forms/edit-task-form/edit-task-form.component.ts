@@ -1,24 +1,32 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { FormArray, Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { Tag } from '../../../interfaces/tag.model';
-import { Task } from 'src/app/interfaces/task.model';
-import { User } from '../../../interfaces/user.model';
+import { UserService } from '../../../services/user.service';
+import { TagService } from '../../../services/tag.service';
 import { TaskService } from '../../../services/task.service';
 
+import { Tag } from '../../../interfaces/tag.model';
+import { Task } from '../../../interfaces/task.model';
+import { User } from '../../../interfaces/user.model';
+
+import { Subscription } from 'rxjs';
+
 @Component({
-  selector: 'app-edit-task-modal',
-  templateUrl: './edit-task-modal.component.html',
-  styleUrls: ['./edit-task-modal.component.scss']
+  selector: 'app-edit-task-form',
+  templateUrl: './edit-task-form.component.html',
+  styleUrls: ['./edit-task-form.component.scss']
 })
-export class EditTaskModalComponent {
+export class EditTaskFormComponent implements OnInit, OnDestroy {
 
   task!: Task;
   availableUsers: User[] = [];
+  serverTags: Tag[] = [];
   taskPriorities: Task['priority'][] = ['Low', 'Medium', 'High'];
   tagCategories: Tag['category'][] = ['UX', 'UI', 'DEV', 'OTHER'];
+  usersSubscription: Subscription = new Subscription();
+  tagsSubscription: Subscription = new Subscription();
 
   editTaskForm = this.formBuilder.group({
     id: [],
@@ -39,11 +47,12 @@ export class EditTaskModalComponent {
   constructor(
     private formBuilder: FormBuilder,
     private taskService: TaskService,
-    private dialogRef: MatDialogRef<EditTaskModalComponent>,
+    private userService: UserService,
+    private tagService: TagService,
+    private dialogRef: MatDialogRef<EditTaskFormComponent>,
     @Inject(MAT_DIALOG_DATA) data: any
   ) {
-    this.task = data?.task;
-    this.availableUsers = data?.users;
+    this.task = data.task;
 
     this.editTaskForm.patchValue({
       ...this.task,
@@ -60,6 +69,11 @@ export class EditTaskModalComponent {
     }
   }
 
+  ngOnInit(): void {
+    this.usersSubscription = this.userService.users$.subscribe(users => this.availableUsers = users);
+    this.tagsSubscription = this.tagService.tags$.subscribe(tags => this.serverTags = tags);
+  }
+
   initTagsForm(): FormGroup {
     return this.formBuilder.group({
       name: [, Validators.required],
@@ -72,7 +86,7 @@ export class EditTaskModalComponent {
   }
 
   onSubmitEditTask(): void {
-    this.taskService.updateTask(this.editTaskForm.value);
+    this.taskService.updateTask(this.editTaskForm.value, this.serverTags);
     this.dialogRef.close();
   }
 
@@ -87,6 +101,11 @@ export class EditTaskModalComponent {
 
   onClickCloseModal(): void {
     this.dialogRef.close();
+  }
+
+  ngOnDestroy(): void {
+    this.usersSubscription.unsubscribe();
+    this.tagsSubscription.unsubscribe();
   }
 
 }

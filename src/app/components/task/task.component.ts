@@ -3,10 +3,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { TaskService } from '../../services/task.service';
-import { EditTaskModalComponent } from '../modals/edit-task-modal/edit-task-modal.component';
+
+import { EditTaskFormComponent } from '../forms/edit-task-form/edit-task-form.component';
 
 import { Task } from '../../interfaces/task.model';
 import { User } from '../../interfaces/user.model';
+import { Tag } from '../../interfaces/tag.model';
 
 @Component({
   selector: 'app-task',
@@ -16,13 +18,14 @@ import { User } from '../../interfaces/user.model';
 export class TaskComponent implements OnInit {
 
   @Input() task!: Task;
-  @Input() users: User[] = [];
+  users: User[] = [];
+  tags: Tag[] = [];
   isDelayed = false;
 
   constructor(
     private taskService: TaskService,
     private dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.calculateIfTaskIsDelayed();
@@ -35,12 +38,7 @@ export class TaskComponent implements OnInit {
   }
 
   onClickEditTask(task: Task) {
-    this.dialog.open(EditTaskModalComponent, {
-      data: { 
-        users: this.users,
-        task
-      }
-    });
+    this.dialog.open(EditTaskFormComponent, { data: { task } });
   }
 
   onClickDeleteTask(task: Task) {

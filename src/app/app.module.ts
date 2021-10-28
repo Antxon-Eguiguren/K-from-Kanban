@@ -7,6 +7,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { AppComponent } from './app.component';
@@ -26,6 +27,7 @@ import { environment } from '../environments/environment';
     AngularFireAuthModule,
     MatGridListModule,
     MatProgressSpinnerModule,
+    MatSidenavModule,
     DragDropModule
   ],
   providers: [],

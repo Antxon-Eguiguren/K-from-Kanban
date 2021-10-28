@@ -50,8 +50,8 @@
     <div class="multiselect">
         <app-multiselect-autocomplete
             placeholder="Asignee(s)"
-            key="options"
-            [availableUsers]="availableUsers"
+            [data]="availableUsers"
+            type="users"
             [assignedUsers]="task.users"
             (result)="receiveUserSelection($event)"
         >
