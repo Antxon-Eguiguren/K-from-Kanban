@@ -16,10 +16,12 @@ import { map, startWith } from 'rxjs/operators';
 export class MultiselectAutocompleteComponent implements OnChanges  {
 
   @Output() result = new EventEmitter<{ data: User[] | Tag[] }>();
+  @Output() cleared = new EventEmitter<boolean>();
   @Input() placeholder: string = 'Select Data';
   @Input() assignedUsers!: User[];
   @Input() data: User[] | Tag[] = [];
   @Input() type: string = 'users' || 'tags';
+  @Input() clear!: boolean;
   selectControl = new FormControl();
   rawData: ItemData[] = [];
   selectedData: ItemData[] = [];
@@ -29,6 +31,10 @@ export class MultiselectAutocompleteComponent implements OnChanges  {
   constructor() {}
 
   ngOnChanges(): void {
+    if (this.clear) {
+      this.selectedData = [];
+      this.cleared.emit(false);
+    }
     this.rawData = [];
     if (this.type === 'users') {
       this.data.forEach(item => {

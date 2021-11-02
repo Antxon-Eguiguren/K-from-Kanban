@@ -1,18 +1,22 @@
-<form [formGroup]="filterForm" (ngSubmit)="onSubmitFilterForm()" autocomplete="off">
+<form [formGroup]="filterForm" autocomplete="off">
     <app-multiselect-autocomplete
         placeholder="Search user(s)"
         [data]="users"
         type="users"
+        [clear]="isCleared"
         (result)="receiveUserSelection($event)"
+        (cleared)="receiveCleared($event)"
     >
     </app-multiselect-autocomplete>
     <app-multiselect-autocomplete
         placeholder="Search tag(s)"
         [data]="tags"
         type="tags"
+        [clear]="isCleared"
         (result)="receiveTagsSelection($event)"
+        (cleared)="receiveCleared($event)"
     >
     </app-multiselect-autocomplete>
-    <button mat-raised-button type="submit">Filter</button>
-    <button mat-raised-button>Clear filter</button>
+    <button mat-raised-button (click)="onSubmitFilterForm()">Filter</button>
+    <button mat-raised-button (click)="onClickClearFilter()">Clear filter</button>
 </form>

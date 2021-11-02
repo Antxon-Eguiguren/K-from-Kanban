@@ -22,6 +22,7 @@ export class FilterFormComponent implements OnInit, OnDestroy {
   });
 
   @Output() filters = new EventEmitter<any>();
+  isCleared: boolean = false;
   users: User[] = [];
   tags: Tag[] = [];
   usersSubscription: Subscription = new Subscription();
@@ -46,8 +47,17 @@ export class FilterFormComponent implements OnInit, OnDestroy {
     this.filterForm.controls['tags'].setValue(event.data);
   }
 
+  receiveCleared(event: any): void {
+    this.isCleared = event;
+  }
+
   onSubmitFilterForm(): void {
     this.filters.emit(this.filterForm.value);
+  }
+
+  onClickClearFilter(): void {
+    this.isCleared = true;
+    this.filterForm.reset();
   }
 
   ngOnDestroy(): void {

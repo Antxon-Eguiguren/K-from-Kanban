@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSidenav } from '@angular/material/sidenav';
 
 import { Task } from './interfaces/task.model';
 
@@ -19,6 +20,7 @@ import { Subscription } from 'rxjs';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
+  @ViewChild('sidenav') sidenav!: MatSidenav;
   titleCols: string[] = ['New', 'In Progress', 'Finished'];
   tasks: Task[] = [];
   newTasks: Task[] = [];
@@ -49,6 +51,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   receiveFilters(event: any): void {
     console.log(event);
+    this.sidenav.close();
   }
 
   onClickNewTask(): void {
