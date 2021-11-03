@@ -24,5 +24,7 @@ mat-form-field {
 }
 
 ::ng-deep .mat-form-field-label {
-    font-family: 'Josefin Sans', sans-serif;
+    span {
+        font-family: 'Josefin Sans', sans-serif;
+    }
 }

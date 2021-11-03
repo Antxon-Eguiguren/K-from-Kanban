@@ -8,6 +8,7 @@
   <mat-sidenav-content>
     <button mat-icon-button class="filter-button" (click)="sidenav.toggle()">
       <mat-icon>filter_list</mat-icon>
+      <div *ngIf="filtersApplied" class="filters-applied-noti"></div>
     </button>
     <section class="kanban">
       <mat-grid-list cols="3" rowHeight="100px" class="title-grid">

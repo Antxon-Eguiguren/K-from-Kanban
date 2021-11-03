@@ -1,0 +1,18 @@
+form {
+    padding: 10px;
+    .buttons {
+        display: flex;
+        flex-direction: column;
+        button {
+            font-family: 'Fira Sans', sans-serif;
+            font-size: 14px;
+            &:first-child {
+                margin: 10px 0px;
+                background-color: rgba(94, 224, 77, 0.87);
+            }
+            &:last-child {
+                background-color: #DE1D3E;
+            }
+        }
+    }
+}

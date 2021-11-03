@@ -17,6 +17,10 @@
                         {{ item.item.name }}
                         <mat-icon class="mat-chip-remove">cancel</mat-icon>
                     </mat-chip>
+                    <mat-chip *ngIf="type === 'priority'" (click)="removeChip(item)">
+                        {{ item.item }}
+                        <mat-icon class="mat-chip-remove">cancel</mat-icon>
+                    </mat-chip>                    
                 </ng-container>
             </mat-chip-list>
         </div>
@@ -39,6 +43,14 @@
                     (click)="$event.stopPropagation()"
                 >
                     {{ item.item.name }}
+                </mat-checkbox>
+                <mat-checkbox
+                    *ngIf="type === 'priority'"
+                    [checked]="item.selected" 
+                    (change)="toggleSelection(item)" 
+                    (click)="$event.stopPropagation()"
+                >
+                    {{ item.item }}
                 </mat-checkbox>
             </div>
         </mat-option>

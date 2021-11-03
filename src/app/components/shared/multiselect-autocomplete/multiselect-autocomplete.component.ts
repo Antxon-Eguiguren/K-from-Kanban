@@ -1,4 +1,4 @@
-import { Component, Output, Input, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Output, Input, EventEmitter, OnInit, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 import { ItemData } from '../../../interfaces/multi-select-item-data';
@@ -13,13 +13,12 @@ import { map, startWith } from 'rxjs/operators';
   templateUrl: './multiselect-autocomplete.component.html',
   styleUrls: ['./multiselect-autocomplete.component.scss'],
 })
-export class MultiselectAutocompleteComponent implements OnChanges  {
+export class MultiselectAutocompleteComponent implements OnInit, OnChanges  {
 
   @Output() result = new EventEmitter<{ data: User[] | Tag[] }>();
-  @Output() cleared = new EventEmitter<boolean>();
   @Input() placeholder: string = 'Select Data';
   @Input() assignedUsers!: User[];
-  @Input() data: User[] | Tag[] = [];
+  @Input() data: User[] | Tag[] | any[] = [];
   @Input() type: string = 'users' || 'tags';
   @Input() clear!: boolean;
   selectControl = new FormControl();
@@ -30,10 +29,16 @@ export class MultiselectAutocompleteComponent implements OnChanges  {
 
   constructor() {}
 
+  ngOnInit(): void {
+    // In case of editing the task, add the assigned users to the chip list
+    if (this.assignedUsers?.length > 0) {
+      this.assignedUsers.forEach(item => this.selectedData.push({ item, selected: true }));
+    }
+  }
+
   ngOnChanges(): void {
     if (this.clear) {
       this.selectedData = [];
-      this.cleared.emit(false);
     }
     this.rawData = [];
     if (this.type === 'users') {
@@ -46,11 +51,6 @@ export class MultiselectAutocompleteComponent implements OnChanges  {
       });
     } else {
       this.data.forEach(item => this.rawData.push({ item, selected: false }));
-    }
-
-    // In case of editing the task, add the assigned users to the chip list
-    if (this.assignedUsers?.length > 0) {
-      this.assignedUsers.forEach(item => this.selectedData.push({ item, selected: true }));
     }
     
     this.filteredData = this.selectControl.valueChanges.pipe(
@@ -70,11 +70,18 @@ export class MultiselectAutocompleteComponent implements OnChanges  {
       } else {
         return this.rawData;
       }
-    } else {
+    } else if (this.type === 'tags') {
       if (inputText.length > 0) {
         return this.rawData.filter(option => 
             option.item.name.toLowerCase().includes(inputText.toLowerCase()) ||
             option.item.category.toLowerCase().includes(inputText.toLowerCase()));
+      } else {
+        return this.rawData;
+      }
+    } else {
+      if (inputText.length > 0) {
+        return this.rawData.filter(option => 
+            option.item.toLowerCase().includes(inputText.toLowerCase()));
       } else {
         return this.rawData;
       }
@@ -98,6 +105,9 @@ export class MultiselectAutocompleteComponent implements OnChanges  {
     item.selected = !item.selected;
     if (item.selected === true) {
       this.selectedData.push(item);
+    } else if (this.type === 'priority') {
+      const i = this.selectedData.findIndex(element => element.item === item.item);
+      this.selectedData.splice(i, 1);
     } else {
       const i = this.selectedData.findIndex(element => element.item.id === item.item.id);
       this.selectedData.splice(i, 1);

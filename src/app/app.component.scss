@@ -18,6 +18,15 @@
     @media (min-width: 1440px) {
         left: 5vw;
     }
+    .filters-applied-noti {
+        background-color: #DE1D3E;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        position: absolute;
+        top: 20px;
+        right: 4px;
+    }
 }
 
 .filter-button:hover {
@@ -86,18 +95,17 @@
     height: 80vh;
     border: 1px dashed rgb(187, 185, 185);
     margin-bottom: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     img {
-        width: 125px;
-        margin: 0px auto;
-        display: block;
-        margin-bottom: 60px;
-        margin-top: 40px;
+        width: 100px;
+        margin-bottom: 20px;
+        margin-left: 18px;
     }
     button {
         font-family: 'Fira Sans', sans-serif;
-        font-size: 14px;
-        display: block;
-        margin: 0px auto;
         mat-icon {
             font-size: 18px;
             vertical-align: text-top;

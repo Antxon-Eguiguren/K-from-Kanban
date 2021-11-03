@@ -17,11 +17,13 @@ import { Subscription } from 'rxjs';
 export class FilterFormComponent implements OnInit, OnDestroy {
 
   filterForm = this.formBuilder.group({
+    priorities: [''],
     users: [''],
     tags: ['']
   });
 
   @Output() filters = new EventEmitter<any>();
+  taskPriorities: string[] = ['Low', 'Medium', 'High'];
   isCleared: boolean = false;
   users: User[] = [];
   tags: Tag[] = [];
@@ -39,16 +41,19 @@ export class FilterFormComponent implements OnInit, OnDestroy {
     this.tagsSubscription = this.tagsService.getTags().subscribe(tags => this.tags = tags);
   }
 
+  receivePrioritySelection(event: any): void {
+    this.isCleared = false;
+    this.filterForm.controls['priorities'].setValue(event.data);
+  }
+
   receiveUserSelection(event: any): void {
+    this.isCleared = false;
     this.filterForm.controls['users'].setValue(event.data);
   }
 
   receiveTagsSelection(event: any): void {
+    this.isCleared = false;
     this.filterForm.controls['tags'].setValue(event.data);
-  }
-
-  receiveCleared(event: any): void {
-    this.isCleared = event;
   }
 
   onSubmitFilterForm(): void {
@@ -58,6 +63,7 @@ export class FilterFormComponent implements OnInit, OnDestroy {
   onClickClearFilter(): void {
     this.isCleared = true;
     this.filterForm.reset();
+    this.filters.emit(this.filterForm.value);
   }
 
   ngOnDestroy(): void {

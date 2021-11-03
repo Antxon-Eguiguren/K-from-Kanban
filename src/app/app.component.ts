@@ -5,6 +5,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
 
 import { Task } from './interfaces/task.model';
+import { Tag } from './interfaces/tag.model';
+import { User } from './interfaces/user.model';
 
 import { TaskService } from './services/task.service';
 import { LoadingService } from './services/loading.service';
@@ -22,7 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   @ViewChild('sidenav') sidenav!: MatSidenav;
   titleCols: string[] = ['New', 'In Progress', 'Finished'];
-  tasks: Task[] = [];
+  filtersApplied: boolean = false;
   newTasks: Task[] = [];
   inProgressTasks: Task[] = [];
   finishedTasks: Task[] = [];
@@ -38,9 +40,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.loadingService.show();
 
     this.tasksSubscription = this.taskService.getTasks().subscribe(tasks => {
-      this.newTasks = tasks.filter(task => task.status === 'New');
-      this.inProgressTasks = tasks.filter(task => task.status === 'In Progress');
-      this.finishedTasks = tasks.filter(task => task.status === 'Finished');
+      this.orderTasks(tasks);
 
       // TODO: investigar cómo hacer para ocultar el loading cuando hayamos leido TODOS los datos
       if (tasks.length > 0) {
@@ -49,9 +49,63 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  receiveFilters(event: any): void {
-    console.log(event);
+  orderTasks(tasks: Task[]): void {
+    this.newTasks = tasks.filter(task => task.status === 'New');
+    this.inProgressTasks = tasks.filter(task => task.status === 'In Progress');
+    this.finishedTasks = tasks.filter(task => task.status === 'Finished');
+  }
+
+  receiveFilters(filters: any): void {
+    this.tasksSubscription = this.taskService.getTasks().subscribe(tasks => this.orderTasks(this.filterTasks(filters, tasks)));
     this.sidenav.close();
+  }
+
+  filterTasks(filters: any, tasks: Task[]): Task[] {
+    let filteredTasks: Task[] = [];
+    const { tags, users, priorities } = filters;
+
+    if (!tags && !users && !priorities) {
+      this.filtersApplied = false;
+      return filteredTasks = tasks;
+    }
+
+    if (tags?.length > 0) {
+      tags.forEach((tagFilter: Tag) => {
+        tasks.forEach(task => {
+          task.tags.forEach(tag => {
+            if (tag.name === tagFilter.name) {
+              filteredTasks.push(task);
+            }
+          });
+        });
+      });
+    }
+
+    if (users?.length > 0) {
+      users.forEach((userFilter: User) => {
+        tasks.forEach(task => {
+          task.users.forEach(user => {
+            if (user.id === userFilter.id) {
+              filteredTasks.push(task);
+            }
+          });
+        });
+      });
+    }
+
+    if (priorities?.length > 0) {
+      priorities.forEach((priorityFilter: string) => {
+        tasks.forEach(task => {
+          if (task.priority === priorityFilter) {
+            filteredTasks.push(task);
+          }
+        });
+      });
+    }   
+
+    // Return the filtered tasks but deleting duplicate values
+    this.filtersApplied = true;
+    return [...new Map(filteredTasks.map(item => [item.id, item])).values()];
   }
 
   onClickNewTask(): void {
