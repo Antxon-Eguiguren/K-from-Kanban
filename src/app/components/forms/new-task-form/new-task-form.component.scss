@@ -12,6 +12,9 @@ form {
     mat-label {
         font-family: 'Josefin Sans', sans-serif;
     }
+    input, textarea {
+        caret-color: white;
+    }
     .tag-buttons {
         padding: 10px;
         display: inline-block;

@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Tag } from '../../../interfaces/tag.model';
 import { User } from '../../../interfaces/user.model';
@@ -49,6 +50,7 @@ export class NewTaskFormComponent implements OnInit, OnDestroy {
     private taskService: TaskService,
     private userService: UserService,
     private tagService: TagService,
+    private snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<NewTaskFormComponent>
   ) {}
 
@@ -87,6 +89,7 @@ export class NewTaskFormComponent implements OnInit, OnDestroy {
     });
     this.taskService.createTask(this.newTaskForm.value, this.serverTags);
     this.dialogRef.close();
+    this.snackBar.open('Task created successfully! ✨', 'Close');
   }
 
   onClickAddTag(event: Event): void {

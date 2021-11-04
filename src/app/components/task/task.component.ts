@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { TaskService } from '../../services/task.service';
 
@@ -24,7 +25,8 @@ export class TaskComponent implements OnInit {
 
   constructor(
     private taskService: TaskService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +45,7 @@ export class TaskComponent implements OnInit {
 
   onClickDeleteTask(task: Task) {
     this.taskService.deleteTask(task.id);
+    this.snackBar.open('Task deleted successfully! 🍺', 'Close');
   }
 
 }

@@ -2,6 +2,7 @@ import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { FormArray, Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { UserService } from '../../../services/user.service';
 import { TagService } from '../../../services/tag.service';
@@ -49,6 +50,7 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
     private taskService: TaskService,
     private userService: UserService,
     private tagService: TagService,
+    private snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<EditTaskFormComponent>,
     @Inject(MAT_DIALOG_DATA) data: any
   ) {
@@ -88,6 +90,7 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
   onSubmitEditTask(): void {
     this.taskService.updateTask(this.editTaskForm.value, this.serverTags);
     this.dialogRef.close();
+    this.snackBar.open('Task edited successfully! 🎉', 'Close');
   }
 
   onClickAddTag(event: Event): void {

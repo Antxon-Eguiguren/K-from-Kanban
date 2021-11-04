@@ -14,6 +14,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 
 import { TaskComponent } from './task/task.component';
 import { NewTaskFormComponent } from './forms/new-task-form/new-task-form.component';
@@ -35,6 +36,7 @@ import { MultiselectAutocompleteComponent } from './shared/multiselect-autocompl
       MatNativeDateModule,
       MatAutocompleteModule,
       MatCheckboxModule,
+      MatSnackBarModule,
       FormsModule,
       ReactiveFormsModule,
       CommonModule
@@ -51,6 +53,9 @@ import { MultiselectAutocompleteComponent } from './shared/multiselect-autocompl
       EditTaskFormComponent,
       FilterFormComponent,
       MultiselectAutocompleteComponent
+    ],
+    providers: [
+      { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 3500, panelClass: 'snackbar' } }
     ]
 })
 export class ComponentsModule { }

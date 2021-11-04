@@ -2,7 +2,7 @@
   class="container"
   *ngIf="!(loadingService.loading$ | async); else loading"
 >
-  <mat-sidenav #sidenav mode="over" class="sidenav-filter">
+  <mat-sidenav #sidenav mode="over" autoFocus="false" class="sidenav-filter">
     <app-filter-form (filters)="receiveFilters($event)"></app-filter-form>
   </mat-sidenav>
   <mat-sidenav-content>

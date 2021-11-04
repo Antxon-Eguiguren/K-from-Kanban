@@ -15,7 +15,7 @@ import { map, startWith } from 'rxjs/operators';
 })
 export class MultiselectAutocompleteComponent implements OnInit, OnChanges  {
 
-  @Output() result = new EventEmitter<{ data: User[] | Tag[] }>();
+  @Output() result = new EventEmitter<{ data: User[] | Tag[] | any[] }>();
   @Input() placeholder: string = 'Select Data';
   @Input() assignedUsers!: User[];
   @Input() data: User[] | Tag[] | any[] = [];

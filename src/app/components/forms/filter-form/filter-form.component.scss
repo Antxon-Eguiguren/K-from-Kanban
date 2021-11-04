@@ -1,5 +1,5 @@
 form {
-    padding: 10px;
+    padding: 25px;
     .buttons {
         display: flex;
         flex-direction: column;
@@ -15,4 +15,8 @@ form {
             }
         }
     }
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label, .mat-option-text {
+    color: white;
 }

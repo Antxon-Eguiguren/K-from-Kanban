@@ -31,3 +31,17 @@ html, body {
     background-color: #dfdfdf;
     border-radius: 20px;
 }
+
+.snackbar {
+    background-color: #323232;
+    color: white;
+    .mat-simple-snackbar {
+        font-family: 'Fira Sans', sans-serif;
+        font-size: 15px;
+    }
+    .mat-button-wrapper {
+        color: #FF4081;
+        font-family: 'Josefin Sans', sans-serif;
+        font-size: 14px;
+    }
+}
