@@ -48,7 +48,7 @@
     </p>
     <div class="avatars" *ngIf="task?.users">
       <ng-container *ngFor="let user of task?.users">
-        <img mat-card-avatar [src]=user.photoUrl>
+        <img mat-card-avatar [src]=user.photoURL>
       </ng-container>
     </div>
     <div *ngIf="isDelayed" class="task-delayed-icon">

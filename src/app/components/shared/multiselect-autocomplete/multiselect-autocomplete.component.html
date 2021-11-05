@@ -10,7 +10,7 @@
             <mat-chip-list>
                 <ng-container *ngFor="let item of selectedData">
                     <mat-chip *ngIf="type === 'users'" (click)="removeChip(item)">
-                        {{ item.item.name + ' ' + item.item.surname }}
+                        {{ item.item.name }}
                         <mat-icon class="mat-chip-remove">cancel</mat-icon>
                     </mat-chip>
                     <mat-chip *ngIf="type === 'tags'" (click)="removeChip(item)">
@@ -34,7 +34,7 @@
                     (change)="toggleSelection(item)" 
                     (click)="$event.stopPropagation()"
                 >
-                    {{ item.item.name + ' ' + item.item.surname }}
+                    {{ item.item.name }}
                 </mat-checkbox>
                 <mat-checkbox
                     *ngIf="type === 'tags'"

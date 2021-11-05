@@ -65,8 +65,7 @@ export class MultiselectAutocompleteComponent implements OnInit, OnChanges  {
     if (this.type === 'users') {
       if (inputText.length > 0) {
         return this.rawData.filter(option => 
-            option.item.name.toLowerCase().includes(inputText.toLowerCase()) ||
-            option.item.surname.toLowerCase().includes(inputText.toLowerCase()));
+            option.item.name.toLowerCase().includes(inputText.toLowerCase()));
       } else {
         return this.rawData;
       }

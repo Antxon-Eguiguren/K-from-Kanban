@@ -11,16 +11,25 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 import { ComponentsModule } from './components/components.module';
+import { GoogleSigninDirective } from './directives/google-signin.directive';
 import { environment } from '../environments/environment';
+
+import { HomePageComponent } from './pages/home-page/home-page.component';
+import { SignInPageComponent } from './pages/sign-in-page/sign-in-page.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomePageComponent,
+    SignInPageComponent,
+    GoogleSigninDirective
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    AppRoutingModule,
     ComponentsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
