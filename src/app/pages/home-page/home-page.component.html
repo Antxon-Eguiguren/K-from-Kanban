@@ -6,10 +6,26 @@
     <app-filter-form (filters)="receiveFilters($event)"></app-filter-form>
   </mat-sidenav>
   <mat-sidenav-content>
+
     <button mat-icon-button class="filter-button" (click)="sidenav.toggle()">
       <mat-icon>filter_list</mat-icon>
       <div *ngIf="filtersApplied" class="filters-applied-noti"></div>
     </button>
+
+    <div class="profile-button">
+      <img
+        *ngIf="afAuth.authState | async as user"
+        mat-card-avatar
+        [src]=user.photoURL
+        [matMenuTriggerFor]="menu"
+      >
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="afAuth.signOut()">
+          <span>Sign Out</span>
+        </button>
+      </mat-menu>
+    </div>
+
     <section class="kanban">
       <mat-grid-list cols="3" rowHeight="100px" class="title-grid">
         <ng-container *ngFor="let title of titleCols">

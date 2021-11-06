@@ -18,7 +18,7 @@ export class UserService {
   ) {}
 
   getUsers(): Observable<User[]> {
-    return this.db.collection<User>('users').valueChanges({ idField: 'id' });
+    return this.db.collection<User>('users').valueChanges();
   }
 
   createUser(user: User): void {

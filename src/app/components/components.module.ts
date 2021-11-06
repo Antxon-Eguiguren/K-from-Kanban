@@ -55,7 +55,7 @@ import { MultiselectAutocompleteComponent } from './shared/multiselect-autocompl
       MultiselectAutocompleteComponent
     ],
     providers: [
-      { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 3500, panelClass: 'snackbar' } }
+      { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 5000, panelClass: 'snackbar' } }
     ]
 })
 export class ComponentsModule { }

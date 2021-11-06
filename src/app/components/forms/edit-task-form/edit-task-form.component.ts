@@ -59,7 +59,7 @@ export class EditTaskFormComponent implements OnInit, OnDestroy {
     this.editTaskForm.patchValue({
       ...this.task,
       dueDate: this.task.dueDate.toDate(),
-      createdOn: this.task.createdOn.toDate(),
+      createdOn: this.task.createdOn.toDate()
     });
 
     for (let i = 0; i < this.task.tags.length; i++) {

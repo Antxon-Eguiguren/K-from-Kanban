@@ -8,6 +8,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatMenuModule } from '@angular/material/menu';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { AppComponent } from './app.component';
@@ -37,6 +38,7 @@ import { SignInPageComponent } from './pages/sign-in-page/sign-in-page.component
     MatGridListModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
+    MatMenuModule,
     DragDropModule
   ],
   providers: [],

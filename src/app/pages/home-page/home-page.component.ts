@@ -1,5 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -33,7 +35,8 @@ export class HomePageComponent implements OnInit, OnDestroy {
   constructor(
     private taskService: TaskService,
     private dialog: MatDialog,
-    public loadingService: LoadingService
+    public loadingService: LoadingService,
+    public afAuth: AngularFireAuth
   ) {}
   
   ngOnInit(): void {
@@ -41,11 +44,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
     this.tasksSubscription = this.taskService.getTasks().subscribe(tasks => {
       this.orderTasks(tasks);
-
-      // TODO: investigar cómo hacer para ocultar el loading cuando hayamos leido TODOS los datos
-      if (tasks.length > 0) {
-        this.loadingService.hide();
-      }
+      this.loadingService.hide();
     });
   }
 
