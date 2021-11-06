@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './sign-in-page.component.html',
   styleUrls: ['./sign-in-page.component.scss']
 })
-export class SignInPageComponent implements OnInit, OnDestroy {
+export class SignInPageComponent implements OnDestroy {
 
   loggedInSubscription!: Subscription;
   usersSubscription!: Subscription;
@@ -24,14 +24,6 @@ export class SignInPageComponent implements OnInit, OnDestroy {
     private router: Router,
     public afAuth: AngularFireAuth
   ) {}
-
-  ngOnInit(): void {
-    this.loggedInSubscription = this.userService.isLoggedIn().subscribe(loggedInUser => {
-      if (!!loggedInUser) {
-        this.router.navigate(['/home']);
-      }
-    });
-  }
 
   onClickGoogleSignIn(): void {
     this.loggedInSubscription = this.userService.isLoggedIn().subscribe(loggedInUser => {

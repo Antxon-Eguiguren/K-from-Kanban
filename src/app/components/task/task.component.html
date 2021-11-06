@@ -21,7 +21,7 @@
     <mat-icon>delete</mat-icon>
   </button>
   <mat-card-content>
-    <p *ngIf="task?.description">
+    <p *ngIf="task?.description" class="task-description">
       {{ task?.description }}
     </p>
     <mat-chip-list *ngIf="task?.tags" [tabIndex]="-1">

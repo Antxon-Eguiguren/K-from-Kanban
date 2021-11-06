@@ -1,28 +1,30 @@
 <form [formGroup]="filterForm" autocomplete="off">
-    <app-multiselect-autocomplete
-        placeholder="Search by priority"
-        [data]="taskPriorities"
-        type="priority"
-        [clear]="isCleared"
-        (result)="receivePrioritySelection($event)"
-    >
-    </app-multiselect-autocomplete>
-    <app-multiselect-autocomplete
-        placeholder="Search by user(s)"
-        [data]="users"
-        type="users"
-        [clear]="isCleared"
-        (result)="receiveUserSelection($event)"
-    >
-    </app-multiselect-autocomplete>
-    <app-multiselect-autocomplete
-        placeholder="Search by tag(s)"
-        [data]="tags"
-        type="tags"
-        [clear]="isCleared"
-        (result)="receiveTagsSelection($event)"
-    >
-    </app-multiselect-autocomplete>
+    <div class="filters">
+        <app-multiselect-autocomplete
+            placeholder="Search by priority"
+            [data]="taskPriorities"
+            type="priority"
+            [clear]="isCleared"
+            (result)="receivePrioritySelection($event)"
+        >
+        </app-multiselect-autocomplete>
+        <app-multiselect-autocomplete
+            placeholder="Search by user(s)"
+            [data]="users"
+            type="users"
+            [clear]="isCleared"
+            (result)="receiveUserSelection($event)"
+        >
+        </app-multiselect-autocomplete>
+        <app-multiselect-autocomplete
+            placeholder="Search by tag(s)"
+            [data]="tags"
+            type="tags"
+            [clear]="isCleared"
+            (result)="receiveTagsSelection($event)"
+        >
+        </app-multiselect-autocomplete>
+    </div>
     <div class="buttons">
         <button mat-raised-button (click)="onSubmitFilterForm()">Filter</button>
         <button mat-raised-button (click)="onClickClearFilter()">Clear filter</button>
