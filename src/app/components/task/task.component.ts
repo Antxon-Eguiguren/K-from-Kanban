@@ -34,7 +34,7 @@ export class TaskComponent implements OnInit {
   }
 
   calculateIfTaskIsDelayed(): void {
-    if (new Date > this.task?.dueDate.toDate()!) {
+    if (new Date > this.task?.dueDate.toDate()! && this.task.status !== 'Finished') {
       this.isDelayed = true;
     }
   }
