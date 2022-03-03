@@ -1,33 +1,39 @@
 section {
-    width: 40%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    h1 {
-        text-align: center;
-        font-family: 'Josefin Sans', sans-serif;
-    }
-    p {
-        text-align: center;
-        font-family: 'Fira Sans', sans-serif;
-    }
-    img {
-        width: 50px;
-        height: 50px;
-        display: block;
-        margin: 0px auto;
-    }
-    button {
-        display: block;
-        margin: 0px auto;
-        margin-top: 60px;
-        font-family: 'Fira Sans', sans-serif;
-    }
-    button:hover {
-        box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-        0 8px 10px 1px rgba(0, 0, 0, 0.14),
-        0 3px 14px 2px rgba(0, 0, 0, 0.12);
-        transition: box-shadow .2s ease-in-out;
-    }
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  background-color: rgb(52, 52, 52);
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  h1 {
+    text-align: center;
+    font-family: "Josefin Sans", sans-serif;
+    color: white;
+  }
+  p {
+    text-align: center;
+    font-family: "Fira Sans", sans-serif;
+    color: white;
+  }
+  img {
+    width: 50px;
+    height: 50px;
+    display: block;
+    margin: 0px auto;
+  }
+  button {
+    display: block;
+    margin: 0px auto;
+    margin-top: 60px;
+    font-family: "Fira Sans", sans-serif;
+  }
+  button:hover {
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+      0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    transition: box-shadow 0.2s ease-in-out;
+  }
 }

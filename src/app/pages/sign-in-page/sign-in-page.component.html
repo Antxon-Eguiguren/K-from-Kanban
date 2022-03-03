@@ -1,8 +1,20 @@
 <section *ngIf="!(afAuth.authState | async)">
-  <img src="./assets/favicon/favicon.svg" alt="k-from-kanban-logo" />
-  <h1>K from Kanban</h1>
-  <p>A minimal Kanban app made with 💞 by Antxon Eguiguren</p>
-  <button mat-raised-button appGoogleSignin (click)="onClickGoogleSignIn()">
-    Sign In with Google
-  </button>
+  <div class="content">
+    <img src="./assets/favicon/favicon.svg" alt="k-from-kanban-logo" />
+    <h1>K from Kanban</h1>
+    <p>A minimal Kanban app made with 💞 by Antxon Eguiguren</p>
+    <div *ngIf="!phoneSignIn">
+      <button mat-raised-button appGoogleSignin>Sign In with Google</button>
+    </div>
+    <div *ngIf="!phoneSignIn">
+      <button mat-raised-button (click)="togglePhoneSignIn()">
+        Sign In with Phone
+      </button>
+    </div>
+    <div *ngIf="phoneSignIn">
+      <app-phone-sign-in-form
+        (phoneSignIn)="togglePhoneSignIn()"
+      ></app-phone-sign-in-form>
+    </div>
+  </div>
 </section>

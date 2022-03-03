@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFireModule } from '@angular/fire/compat';
@@ -25,7 +26,7 @@ import { SignInPageComponent } from './pages/sign-in-page/sign-in-page.component
     AppComponent,
     HomePageComponent,
     SignInPageComponent,
-    GoogleSigninDirective
+    GoogleSigninDirective,
   ],
   imports: [
     BrowserModule,
@@ -39,9 +40,10 @@ import { SignInPageComponent } from './pages/sign-in-page/sign-in-page.component
     MatProgressSpinnerModule,
     MatSidenavModule,
     MatMenuModule,
-    DragDropModule
+    DragDropModule,
+    FormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
