@@ -8,6 +8,53 @@ form {
   margin: 20px 0px;
 }
 
-.back-button {
-  margin: 20px 0px;
+.submit-button {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 14px;
+  margin: 10px;
+  margin-bottom: 10px;
+  mat-icon {
+    font-size: 16px;
+    vertical-align: sub;
+  }
+  &.enabled {
+    background-color: rgba(94, 224, 77, 0.87);
+  }
+}
+.submit-button:hover {
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label,
+.mat-option-text {
+  color: white;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-ripple {
+  background-color: white;
+}
+
+::ng-deep .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+  color: white;
+}
+
+::ng-deep .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+  color: white;
+}
+
+::ng-deep .mat-datepicker-toggle-active {
+  color: white;
+}
+
+::ng-deep .mat-select-value-text,
+::ng-deep .mat-option-text,
+::ng-deep .mat-form-field-infix {
+  font-family: "Fira Sans", sans-serif;
+  font-size: 14px;
+}
+
+.mat-input-element {
+  color: white;
 }

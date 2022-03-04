@@ -77,8 +77,6 @@ export class PhoneSignInFormComponent implements AfterViewInit {
       // User signed in successfully
       result.user.displayName = this.sendOTPForm.controls['name'].value;
       result.user.email = this.sendOTPForm.controls['email'].value;
-      result.user.photoURL =
-        'https://avatars.githubusercontent.com/u/39241600?v=4';
       this.userService.checkUser();
     } catch (error) {
       // User couldn't sign in (bad verification code?)

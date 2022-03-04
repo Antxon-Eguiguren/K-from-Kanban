@@ -13,9 +13,15 @@
 
     <div class="profile-button">
       <img
-        *ngIf="afAuth.authState | async as user"
+        *ngIf="user.photoURL"
         mat-card-avatar
         [src]="user.photoURL"
+        [matMenuTriggerFor]="menu"
+      />
+      <img
+        *ngIf="!user.photoURL"
+        mat-card-avatar
+        src="../../../assets/default-avatar.png"
         [matMenuTriggerFor]="menu"
       />
       <mat-menu #menu="matMenu">

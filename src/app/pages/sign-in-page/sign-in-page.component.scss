@@ -25,10 +25,12 @@ section {
     display: block;
     margin: 0px auto;
   }
+  .buttons-container {
+    display: flex;
+  }
   button {
     display: block;
-    margin: 0px auto;
-    margin-top: 60px;
+    margin: 30px 30px;
     font-family: "Fira Sans", sans-serif;
   }
   button:hover {

@@ -29,6 +29,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
   inProgressTasks: Task[] = [];
   finishedTasks: Task[] = [];
   tasksSubscription: Subscription = new Subscription();
+  user!: User;
 
   constructor(
     private taskService: TaskService,
@@ -42,6 +43,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
     this.loadingService.show();
 
     this.userService.isLoggedIn().subscribe((user) => {
+      this.user = user;
       console.log(user);
     });
 

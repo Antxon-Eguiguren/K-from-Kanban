@@ -19,18 +19,14 @@
   <div id="recaptcha-container"></div>
   <button
     class="submit-button"
-    [ngClass]="{ enabled: sendOTPForm.valid }"
+    [ngClass]="{ enabled: sendOTPForm.valid && isValidCaptcha }"
     mat-raised-button
     type="submit"
     [disabled]="!sendOTPForm.valid || !isValidCaptcha"
   >
     Send OTP
   </button>
-  <button
-    class="submit-button back-button"
-    mat-raised-button
-    (click)="goBack()"
-  >
+  <button class="submit-button" mat-raised-button (click)="goBack()">
     Back
   </button>
 </form>
